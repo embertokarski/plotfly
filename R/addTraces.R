@@ -40,7 +40,8 @@ addTraces <- function(cols, dimcols, shared) {
                    type = "scatter3d",
                    text = label, 
                    color = group,
-                   colors = pal)
+                   colors = pal,
+                   visible = (column == cols[1]))
   } 
   return(p)
 
