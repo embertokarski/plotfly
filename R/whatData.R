@@ -29,10 +29,13 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
 
     params$what <- "Seurat"
     stopifnot(use %in% names(x@reductions))
-    stopifnot(ncol(x@reductions[[use]]@cell_embeddings) >= length(dims))
-    params$rd <- as.data.frame(x@reductions[[use]]@cell_embeddings[, dims])
+    stopifnot(ncol(x@reductions[[use]]@cell.embeddings) >= length(dims))
+    params$rd <- as.data.frame(x@reductions[[use]]@cell.embeddings[, dims])
     stopifnot(all(columns %in% colnames(x@meta.data)))
     params$cd <- as.data.frame(x@meta.data[, columns])
+    #don't assign column name for single factor; set explicitly
+    colnames(params$cd) <- columns
+    
 
   } else if (is(x, "SingleCellExperiment")) {
  
@@ -58,7 +61,7 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     params$what <- "unknown"
 
   }
-
+  browser("check colnames")
   return(params) 
 
 }
