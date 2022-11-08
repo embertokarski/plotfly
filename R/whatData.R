@@ -61,7 +61,7 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     params$what <- "unknown"
 
   }
-  browser("check colnames")
+  
   return(params) 
 
 }
