@@ -16,11 +16,10 @@
 #' @export
 cleanAxis <- function(i, dimcols) {
 
-  res <- list(title=dimcols[i], 
+  res <- list(title = list(text = dimcols[i]), 
               showticklabels = FALSE,
-              zeroline = FALSE,
+              zeroline = TRUE,
               showline = FALSE,
               showgrid = FALSE)
   return(res)
-
 }

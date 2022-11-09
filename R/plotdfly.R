@@ -44,6 +44,7 @@ plotdfly <- function(rd, dimcols = NULL, groupcols = c("group"), ...) {
   stopifnot(is(rd, "data.frame"))
 
   # check that all dims are available or at least room for them
+  #Currently requires named dims if not default?
   if (!is.null(dimcols)) stopifnot(all(dimcols %in% names(rd))) 
   else stopifnot(ncol(rd) >= length(groupcols) + 3)
   if (is.null(dimcols)) dimcols <- names(rd)[1:3]
@@ -53,11 +54,12 @@ plotdfly <- function(rd, dimcols = NULL, groupcols = c("group"), ...) {
   shared <- SharedData$new(rd)
   dropdown <- makeDropdown(groupcols, shared=shared)
   updatemenus <- list(list(y = 0.9, buttons=dropdown))
-  axes <- lapply(list(x=1, y=2, z=3), cleanAxis, dimcols=dimcols)
+  
+  axes <- lapply(list(xaxis=1, yaxis=2, zaxis=3), cleanAxis, dimcols=dimcols)
   p <- addTraces(groupcols, dimcols=dimcols, shared=shared)
 
   # suppress if only one grouping
   if (length(groupcols) == 1) layout(p, scene = axes)
   else layout(p, updatemenus = updatemenus, scene = axes)
-
+  
 }
