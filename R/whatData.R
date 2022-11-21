@@ -22,8 +22,9 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     params$what <- "data.frame"
     eligible <- setdiff(colnames(x), colnames(x)[dims])
     stopifnot(all(columns %in% eligible))
-    params$rd <- x[, dims]
-    params$cd <- x[, columns]
+    params$rd <- as.data.frame(x[, dims])
+    params$cd <- as.data.frame(x[, columns])
+    colnames(params$cd) <- columns
 
   } else if (is(x, "Seurat")) {
 
@@ -33,7 +34,6 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     params$rd <- as.data.frame(x@reductions[[use]]@cell.embeddings[, dims])
     stopifnot(all(columns %in% colnames(x@meta.data)))
     params$cd <- as.data.frame(x@meta.data[, columns])
-    #don't assign column name for single factor; set explicitly
     colnames(params$cd) <- columns
     
 
@@ -45,6 +45,7 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     params$rd <- as.data.frame(x@int_colData$reducedDims[["use"]][, dims])
     stopifnot(all(columns %in% colnames(x@colData)))
     params$cd <- as.data.frame(x@colData[, columns])
+    colnames(params$cd) <- columns
 
   } else if (is(x, "nmf")) {
     
@@ -54,6 +55,7 @@ whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
     if(!"colData" %in% names(x@misc)) stop("nmf objects need @misc$colData")
     stopifnot(all(columns %in% colnames(x@misc$colData)))
     params$cd <- as.data.frame(x@misc$colData[, columns])
+    colnames(params$cd) <- columns
 
   } else { 
 
