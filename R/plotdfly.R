@@ -44,11 +44,10 @@ plotdfly <- function(rd, dimcols = NULL, groupcols = c("group"), ...) {
   stopifnot(is(rd, "data.frame"))
 
   # check that all dims are available or at least room for them
-  #Currently requires named dims if not default?
-  # if (!is.null(dimcols)) stopifnot(all(dimcols %in% names(rd))) 
-  # else stopifnot(ncol(rd) >= length(groupcols) + 3)
-  stopifnot(ncol(rd) >= length(groupcols) + 3)
-  # if (is.null(dimcols)) dimcols <- names(rd)[1:3]
+  if (!is.null(dimcols) & !is.numeric(dimcols)) stopifnot(all(dimcols %in% names(rd)))
+  else stopifnot(ncol(rd) >= length(groupcols) + 3)
+  
+  # set axis names to dimensions
   dimcols <- names(rd)[1:3]
   if (is.null(dimcols)) dimcols <- c("dim1", "dim2", "dim3")
   
