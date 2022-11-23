@@ -5,16 +5,15 @@
 #' @param x         an object (a data.frame, matrix, SCE, or Seurat) 
 #' @param use       name of dimred to use, if x is not a df or matrix ("UMAP")
 #' @param color_by  column name of metadata (or x itself) to color by ("study")
-#' @param label_by  column name of metadata (or of x itself) to label by (NULL)
 #' @param dims      what dimred columns (or plain old columns) in x to use (1:3)
 #'
 #' @return          a string with the (sanity checked) data type, or an error
 #'
 #' @export
-whatData <- function(x, use="UMAP", color_by="study", label_by=NULL, dims=1:3) {
+whatData <- function(x, use="UMAP", color_by="study", dims=1:3) {
 
   params <- list() 
-  columns <- union(color_by, label_by)
+  columns <- color_by
 
   if (is(x, "data.frame")) { 
 
